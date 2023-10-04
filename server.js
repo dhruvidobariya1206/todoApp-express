@@ -3,6 +3,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser')
 const { authRoute } = require('./src/components/auth/route');
 const { todoRoute } = require('./src/components/todo/route');
+const { countriesRoute } = require('./src/components/countries/route')
 const { errorHandler } = require('./handleErrors');
 require('dotenv').config({ path: './.env' })
 
@@ -21,6 +22,8 @@ app.use(bodyParser.json());
 // ROUTES
 app.use('/users', authRoute);
 app.use('/users/todos', todoRoute);
+app.use('/countries',countriesRoute);
+
 
 app.use((req, res, next) => {
     next(new Error('PAGE_NOT_FOUND'));

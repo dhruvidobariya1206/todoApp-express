@@ -8,7 +8,6 @@ const isAuth = (req, res, next) => {
         });
     }
     else {
-        // console.log(req.session.user);
         next();
     }  
 }
