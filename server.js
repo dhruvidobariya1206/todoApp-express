@@ -19,8 +19,8 @@ app.use(session({
 app.use(bodyParser.json());
 
 // ROUTES
-app.use('/user', authRoute);
-app.use('/user/:userId/todo', todoRoute);
+app.use('/users', authRoute);
+app.use('/users/todos', todoRoute);
 
 app.use((req, res, next) => {
     next(new Error('PAGE_NOT_FOUND'));

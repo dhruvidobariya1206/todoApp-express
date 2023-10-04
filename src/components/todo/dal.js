@@ -23,7 +23,9 @@ const insert = async (dbClient, userId, title, description) => {
     VALUES 
         ($1, $2, $3) 
     RETURNING 
-        id, title, description;`
+        id, 
+        title, 
+        description;`
     const parameters = [userId, title, description];
     const result = await dbClient.query(query,parameters);
     return result.rows[0];
@@ -39,7 +41,10 @@ const updateTodo = async (dbClient, userId, todoId, title, description) => {
     WHERE 
         id = $3 AND 
         "userId" = $4 
-    RETURNING *;`
+    RETURNING 
+        id,
+        title,
+        description;`
     const parameters = [title, description, todoId, userId];
     const result = await dbClient.query(query,parameters);
     return result.rows[0];
@@ -50,11 +55,14 @@ const updateTitle = async (dbClient, userId, todoId, title) => {
     UPDATE 
         todo 
     SET 
-        title = $1, 
+        title = $1
     WHERE 
         id = $2 AND 
         "userId" = $3 
-    RETURNING *;`
+    RETURNING 
+        id,
+        title,
+        description;`
     const parameters = [title, todoId, userId];
     const result = await dbClient.query(query,parameters);
     return result.rows[0];
@@ -69,7 +77,10 @@ const updateDescription = async (dbClient, userId, todoId, description) =>{
     WHERE 
         id = $2 AND 
         "userId" = $3 
-    RETURNING *;`
+    RETURNING 
+        id,
+        title,
+        description;`
     const parameters = [description, todoId, userId];
     const result = await dbClient.query(query,parameters);
     return result.rows[0];
