@@ -10,9 +10,6 @@ const checkTodoId = async (client, userId, todoId) => {
 const add = async (userId, title, description) => {
     const client = await pool.connect();
     try {
-        // if(!title || !description) {
-        //     throw new Error('INVALID_DATA');
-        // }
         const todo = await dal.insert(client, userId, title, description);
         return todo;
     }

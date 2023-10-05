@@ -17,7 +17,6 @@ const getOne = async (id) => {
     if(!rsltCountry) {
         throw new Error('RESOURCE_NOT_FOUND');
     }
-    // console.log(rsltCountry);
     return rsltCountry;
 }
 

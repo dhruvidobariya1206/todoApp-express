@@ -1,9 +1,7 @@
 const { registerService, loginService } = require('./service');
 
 const register = async (req,res, next) => {
-    // console.log('controller');
     try {
-        // console.log(req.body.username);
         const result = await registerService(req.body.username,req.body.password);
         res.status(201).send(result)
     }

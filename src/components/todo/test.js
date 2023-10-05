@@ -57,7 +57,6 @@ describe('Todos', async () => {
                 .post(`/users/todos`)   
                 .send(todoDetails)
                 .set('Cookie', sessionCookie)
-                // .set('Cookie', sessionCookie)
                 .end((err,res) => {
                     if(err) {
                         return err;

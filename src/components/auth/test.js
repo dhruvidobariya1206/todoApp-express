@@ -203,11 +203,9 @@ describe('auth', () => {
                 .set('Cookie', sessionCookie)
                 .end((err, res) => {
                     if(err) {
-                        // console.log('err');
                         return done(err);
                     }
                     else {
-                        // console.log('no err');
                         expect(res).have.status(200);
                         done();
                     }
