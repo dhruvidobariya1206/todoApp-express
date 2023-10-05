@@ -10,6 +10,7 @@ const app = require('../../../server');
 
 describe('Countries test', () => {
     
+    
     let sessionCookie, id=1;
     const data = {
         "data": {
