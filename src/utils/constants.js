@@ -1,6 +1,4 @@
-const { ValidationError } = require('express-validation');
-
-const errors = {
+module.exports.ERRORS = {
     INVALID_DATA: {
         code: 400,
         response: {
@@ -38,15 +36,5 @@ const errors = {
     },
 };
 
-const errorHandler = (error, req, res, next) => {
-    if(error instanceof ValidationError) {
-        res.status(error.statusCode).send(error);
-    }
-    else {
-        res.status(errors[error.message].code).send(errors[error.message].response);
-    }
-    
-}
 
-
-module.exports = { errorHandler };
+// module.exports.

@@ -1,6 +1,9 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const nock = require('nock');
+const sinon = require('sinon');
+const { countries } = require('./controller');
+
 chai.use(chaiHttp);
 
 const expect = chai.expect;
@@ -8,8 +11,8 @@ const expect = chai.expect;
 const app = require('../../../server');
 
 
+
 describe('Countries test', () => {
-    
     
     let sessionCookie, id=1;
     const data = {
@@ -22,6 +25,7 @@ describe('Countries test', () => {
             ]
         }
     };
+
     nock('https://dev-api-minibrands.zurutech.online/v1/countries')
         .persist()
         .get('')
@@ -117,3 +121,17 @@ describe('Countries test', () => {
     });
 
 });
+
+describe('mocking function', () => {
+
+    it('countries', () => {
+        const mock = sinon.stub(countries, 'allCountries').value({ id: 1, name: "India" });
+    
+        const result = countries.allCountries;
+    
+        expect(result).to.deep.equal({ id: 1, name: "India" });
+    
+        mock.restore();
+    });
+    
+})

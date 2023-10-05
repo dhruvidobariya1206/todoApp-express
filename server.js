@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const { authRoute } = require('./src/components/auth/route');
 const { todoRoute } = require('./src/components/todo/route');
 const { countriesRoute } = require('./src/components/countries/route')
-const { errorHandler } = require('./handleErrors');
+const { errorHandler } = require('./src/utils/helper');
 require('dotenv').config({ path: './.env' })
 
 

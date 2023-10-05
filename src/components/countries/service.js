@@ -21,4 +21,6 @@ const getOne = async (id) => {
     return rsltCountry;
 }
 
+
+
 module.exports = { getAll, getOne };

@@ -21,4 +21,17 @@ const getOneCountry = async (req, res, next) => {
     }
 }
 
-module.exports = { getCountries, getOneCountry };
+const countries = {
+    allCountries : () => {
+        const countries = [
+            {id: 1,
+            name: "India"},
+            {id: 2,
+            name: "Albania"}
+        ];
+        return countries;
+    }
+}
+// console.log(countries.allCountries());
+
+module.exports = { getCountries, getOneCountry, countries };
