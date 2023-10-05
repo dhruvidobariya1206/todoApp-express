@@ -8,7 +8,6 @@ const { errorHandler } = require('./src/utils/helper');
 require('dotenv').config({ path: './.env' })
 
 
-
 const app = express();
 
 app.use(session({

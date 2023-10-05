@@ -1,20 +1,21 @@
 const pool = require('../../../dbconn');
 const dal = require('./dal');
 
-const ifExist = async(client, username) => {
-    const user = await dal.getOneByName(client, username);
-    if (user) {
+const ifExist = async(client, username, email) => {
+    const userByName = await dal.getOneByName(client, username);
+    const userByEmail = await dal.getOneByEmail;(client, email);
+    if (userByName || userByEmail) {
         return true;
     }
     return false;    
 }
 
-const registerService = async(username, password) => {
-    const client = await pool.connect();;
+const registerService = async(username, password, email) => {
+    const client = await pool.connect();
     try {
-        const user = await ifExist(client, username)
+        const user = await ifExist(client, username, email)
         if(!user){
-            const insert =  await dal.insert(client, username, password);
+            const insert =  await dal.insert(client, username, password, email);
             return insert;
         }
         else {

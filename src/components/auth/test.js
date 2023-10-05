@@ -19,9 +19,19 @@ describe('auth', () => {
             WHERE
                 username = '26'`;
         await client.query(query);
-        await client.release;
+        client.release;
     });
 
+    after('delete record', async () => {
+        const client = await pool.connect();
+        const query = `
+            DELETE FROM
+                "user"
+            WHERE
+                username = '26'`;
+        await client.query(query);
+        client.release();
+    });
 
     describe("Resgister page", () => {
         it('register user', (done) => {
@@ -213,19 +223,6 @@ describe('auth', () => {
         });
     });
     
-    
-
-
-    after('delete record', async () => {
-        const client = await pool.connect();
-        const query = `
-            DELETE FROM
-                "user"
-            WHERE
-                username = '26'`;
-        await client.query(query);
-        await client.release();
-    });
-})
+});
 
 

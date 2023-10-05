@@ -1,13 +1,14 @@
 
-const insert = async (dbClient, username, password) => {
+const insert = async (dbClient, username, password, email) => {
     const query = `
     INSERT 
     INTO "user" 
         (username, 
-        password)
-    VALUES ($1, $2) 
+        password,
+        email)
+    VALUES ($1, $2, $3) 
     returning *;`
-    const parameters = [username, password];
+    const parameters = [username, password, email];
     const result = await dbClient.query(query,parameters);
     return result.rows[0];
 }
@@ -41,4 +42,18 @@ const getOneByName = async (dbClient, username) => {
     return result.rows[0];
 }
 
-module.exports = { insert, getOneByNamePass, getOneByName };
+const getOneByEmail= async (dbClient, email) => {
+    const query = `
+    SELECT
+        id,
+        email
+    FROM 
+        "user" 
+    WHERE 
+        email=($1);`
+    const parameters = [email];
+    const result = await dbClient.query(query,parameters);
+    return result.rows[0];
+}
+
+module.exports = { insert, getOneByNamePass, getOneByName, getOneByEmail };
