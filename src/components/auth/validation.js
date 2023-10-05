@@ -7,8 +7,7 @@ const login = {
             .required(),
         password: Joi.string()
             .required()
-            .min(8)
-            .regex(/=.*8[A-Z]=.*8[a-z]=.*8[0-9]/),
+            .min(8),
         email: Joi.string()
             .required()
             .regex(/^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/)
