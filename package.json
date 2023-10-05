@@ -20,6 +20,7 @@
     "express-session": "^1.17.3",
     "express-validation": "^4.1.0",
     "mocha": "^10.2.0",
+    "nock": "^13.3.3",
     "nodemon": "^3.0.1",
     "pg-pool": "^3.6.1",
     "supertest": "^6.3.3"

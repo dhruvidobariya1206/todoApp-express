@@ -1,12 +1,10 @@
-const axios = require('axios');
-
-const api = 'https://dev-api-minibrands.zurutech.online/v1/countries';
+const { getAll, getOne } = require('./service');
 
 
 const getCountries = async (req, res, next) => {
     try {
-        const result = await axios.get(api);
-        res.status(result.status).send(result.data.data.countries);
+        const result = await getAll();
+        res.status(200).send(result);
     }
     catch (error) {
         next(error);
@@ -15,9 +13,8 @@ const getCountries = async (req, res, next) => {
 
 const getOneCountry = async (req, res, next) => {
     try{
-        console.log(req.params.id);
-        res.status(200).send();
-        // const result = await axios.get(`${api}/`)
+        const result = await getOne(req.params.id);
+        res.status(200).send(result);
     }
     catch(error) {
         next(error);
