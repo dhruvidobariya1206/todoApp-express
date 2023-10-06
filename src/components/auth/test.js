@@ -9,18 +9,19 @@ const app = require('../../../server');
 
 
 describe('auth', () => {
-    const userCredentials = {"username": "26", "password": "26262626"};
-
-    before('delete record', async () => {
-        const client = await pool.connect();
-        const query = `
-            DELETE FROM
-                "user"
-            WHERE
-                username = '26'`;
-        await client.query(query);
-        client.release;
-    });
+    const userCredentials = {"username": "dhruvi", "password": "12345678", "email": "ddobariya5262@gmail.com"};
+    
+    // before('delete record', async () => {
+    //     const client = await pool.connect();
+    //     const query = `
+    //         DELETE FROM
+    //             "user"
+    //         WHERE
+    //             username = '$1'`;
+    //     const parameters = [userCredentials.username];
+    //     await client.query(query, parameters);
+    //     client.release();
+    // });
 
     after('delete record', async () => {
         const client = await pool.connect();
@@ -28,8 +29,9 @@ describe('auth', () => {
             DELETE FROM
                 "user"
             WHERE
-                username = '26'`;
-        await client.query(query);
+                username = '($1)'`;
+        const parameters = [userCredentials.username];
+        await client.query(query, parameters);
         client.release();
     });
 
@@ -46,6 +48,7 @@ describe('auth', () => {
                     expect(res.body).be.a('object');
                     expect(res.body).to.have.property('id');
                     expect(res.body).to.have.property('username');
+                    expect(res.body).to.have.property('email');
                     done();
                 });
         });
@@ -64,7 +67,7 @@ describe('auth', () => {
         });
     
         it('password required', (done) => {
-            const username = {"username": "26"};
+            const username = {"username": "26", "email": "ddobariya5262@gmail.com"};
             
             chai.request(app)
                 .post('/users/register')
@@ -78,7 +81,20 @@ describe('auth', () => {
         });
     
         it('username required', (done) => {
-            const password = {"password": '26262626'};
+            const password = {"password": '26262626', "email": "ddobariya5262@gmail.com"};
+    
+            chai.request(app)
+                .post('/users/register')
+                .send(password)
+                .end( (err,res) => {
+                    expect(res.body).to.exist;
+                    expect(res).have.status(400);
+                    done();
+                });
+        });
+
+        it('email required', (done) => {
+            const password = {"username": "26", "password": '26262626'};
     
             chai.request(app)
                 .post('/users/register')
@@ -106,6 +122,7 @@ describe('auth', () => {
     
     
     describe("Login page", () => {
+        const userCredentials = {"username": "dhruvi", "password": "12345678"};
         it('login user', (done) => {
     
             chai.request(app)
@@ -189,6 +206,7 @@ describe('auth', () => {
     
     describe("logout page", () => {
         let sessionCookie;
+        const userCredentials = {"username": "dhruvi", "password": "12345678"};
         before('login user', (done) => {
     
             chai.request(app)

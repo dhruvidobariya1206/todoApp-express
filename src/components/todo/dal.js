@@ -118,7 +118,6 @@ const markCompleted = async (dbClient, userId, todoId) => {
 const getByDate = async (dbClient) => {
     const query = `
     SELECT 
-        todo.id,
         todo.title,
         todo."userId",
         "user".email 
