@@ -3,7 +3,7 @@ const dal = require('./dal');
 
 const ifExist = async(client, username, email) => {
     const userByName = await dal.getOneByName(client, username);
-    const userByEmail = dal.getOneByEmail;(client, email);
+    const userByEmail = await dal.getOneByEmail(client, email);
     if (userByName || userByEmail) {
         return true;
     }

@@ -16,17 +16,17 @@ const getOneByIdUser = async (dbClient, userId, todoId) => {
     return result.rows[0];
 }
 
-const insert = async (dbClient, userId, title, description) => {
+const insert = async (dbClient, userId, title, description, date) => {
     const query = `
     INSERT INTO 
-        todo ("userId", title, description)
+        todo ("userId", title, description, "createdAt")
     VALUES 
-        ($1, $2, $3) 
+        ($1, $2, $3, $4) 
     RETURNING 
         id, 
         title, 
         description;`
-    const parameters = [userId, title, description];
+    const parameters = [userId, title, description, date];
     const result = await dbClient.query(query,parameters);
     return result.rows[0];
 }
@@ -115,4 +115,23 @@ const markCompleted = async (dbClient, userId, todoId) => {
     await dbClient.query(query,parameters);
 }
 
-module.exports = { getOneByIdUser, insert, updateTodo, updateTitle, updateDescription, getAll, markCompleted }
+const getByDate = async (dbClient) => {
+    const query = `
+    SELECT 
+        todo.id,
+        todo.title,
+        todo."userId",
+        "user".email 
+    FROM 
+        todo
+    JOIN 
+        "user" 
+    ON 
+        todo."userId" = "user".id 
+    WHERE 
+        todo."createdAt"::date+interval '5 days'=current_date ; `
+    const result = await dbClient.query(query);
+    return result.rows;
+}
+
+module.exports = { getOneByIdUser, insert, updateTodo, updateTitle, updateDescription, getAll, markCompleted, getByDate }

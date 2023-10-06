@@ -17,7 +17,8 @@ const getOneByNamePass = async (dbClient, username, password) => {
     const query = `
     SELECT 
         id,
-        username
+        username,
+        email
     FROM 
         "user" 
     WHERE 

@@ -5,7 +5,7 @@ const controller = require('./controller');
 const {validate} = require('express-validation');
 
 
-authRoute.post('/register', validate(validation.login, {}, {}), controller.register);
+authRoute.post('/register', validate(validation.register, {}, {}), controller.register);
 authRoute.post('/login', validate(validation.login, {}, {}), controller.login);
 authRoute.get('/logout', controller.logout);
 

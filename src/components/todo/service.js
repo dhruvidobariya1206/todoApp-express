@@ -10,7 +10,8 @@ const checkTodoId = async (client, userId, todoId) => {
 const add = async (userId, title, description) => {
     const client = await pool.connect();
     try {
-        const todo = await dal.insert(client, userId, title, description);
+        const date = new Date();
+        const todo = await dal.insert(client, userId, title, description, date);
         return todo;
     }
     finally {
@@ -86,4 +87,19 @@ const remove = async (userId, todoId) => {
     }   
 }
 
-module.exports = { add, update, getAll, getOne, remove };
+const get5DaysTodo = async () => {
+    const client = await pool.connect();
+    try {
+        const todos = await dal.getByDate(client);
+        if(!todos) {
+            throw new Error('RESOURCE_NOT_FOUND');
+        }
+        // console.log(todos);
+        return todos;
+    }
+    finally {
+        client.release();
+    }
+}
+
+module.exports = { add, update, getAll, getOne, remove, get5DaysTodo };
