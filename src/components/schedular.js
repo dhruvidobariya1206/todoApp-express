@@ -3,20 +3,6 @@ const { transporter } = require('../lib/nodeMailer');
 require('dotenv').config({path: '../../.env'});
 
 
-const getEmails = async() => {
-    // console.log('cron job schedular');
-    try{
-        const todos = await get5DaysTodo();
-        // console.log(emails);
-        todos.forEach(todo => {
-            sendMail(todo);
-        });
-    }
-    catch(error) {
-        console.log(error);
-    }
-};
-
 const sendMail = async (todo) => {
     const mail = {
         from: process.env.SMTP_EMAIL,
@@ -35,4 +21,19 @@ const sendMail = async (todo) => {
     
 }
 
-module.exports = { getEmails };
+module.exports = {
+    getEmails : async() => {
+        // console.log('cron job schedular');
+        try{
+            const todos = await get5DaysTodo();
+            // console.log(emails);
+            todos.forEach(todo => {
+                sendMail(todo);
+            });
+        }
+        catch(error) {
+            console.log(error);
+        }
+    },
+}
+

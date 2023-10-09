@@ -23,8 +23,8 @@ module.exports.ERRORS = {
     CONFLICT: {
         code: 409,
         response: {
-            code: 'Username already exists',
-            message: 'Username is not available.',
+            code: 'User already exists',
+            message: 'User is not available.',
         }
     },
     PAGE_NOT_FOUND: {

@@ -1,7 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
-const pool = require('../../../dbconn');
+const { pool } = require('../../../dbconn');
 
 const expect = chai.expect;
 
@@ -37,21 +37,25 @@ describe('Todos', async () => {
 
     after('delete record', async () => {
         const client = await pool.connect();
-        const todoQuery = `
-            DELETE FROM
-                todo
-            WHERE
-                id = $1`;
-        const todoParam = [todoId]
-        await client.query(todoQuery, todoParam);
-        const userQuery = `
-            DELETE FROM
-                "user"
-            WHERE
-                username = $1`;
-        const userParams = ['dhruvi'];
-        await client.query(userQuery, userParams);
-        await client.release();
+        try {
+            const todoQuery = `
+                DELETE FROM
+                    todo
+                WHERE
+                    id = $1`;
+            const todoParam = [todoId]
+            await client.query(todoQuery, todoParam);
+            const userQuery = `
+                DELETE FROM
+                    "userAccount"
+                WHERE
+                    username = $1`;
+            const userParams = ['dhruvi'];
+            await client.query(userQuery, userParams);
+        }
+        finally {
+            client.release();
+        }
     });
 
 

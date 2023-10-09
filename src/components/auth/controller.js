@@ -1,41 +1,40 @@
-const { registerService, loginService } = require('./service');
+const service = require('./service');
 
-const register = async (req,res, next) => {
-    try {
-        const result = await registerService(req.body.username,req.body.password,req.body.email);
-        res.status(201).send(result)
-    }
-    catch (error){
-        next(error);
-    }
+module.exports = {
+    register : async (req,res, next) => {
+        try {
+            const username = req.body.username,
+                password = req.body.password,
+                email = req.body.email;
+            const result = await service.register(username,password,email);
+            req.user = result;
+            res.status(201).send(result)
+        }
+        catch (error){
+            next(error);
+        }
+    },
+
+    login : async (req,res, next) => {
+        try {
+            const result = await service.login(req.body.username, req.body.password);
+            req.session.user = result;
+            res.status(200).send(result);
+        }
+        catch (error) {
+            next(error);
+        }
+    },
+
+    logout : (req,res, next) => {
+        try {
+            req.user = req.session.user;
+            service.logout(req.session);
+            res.status(200).send('Logout successful');
+        }
+        catch(error) {
+            next(error);
+        }  
+    },
 }
 
-
-const login = async (req,res, next) => {
-    try {
-        const result = await loginService(req.body.username, req.body.password);
-        req.session.user = result;
-        res.status(200).send(result);
-    }
-    catch (error) {
-        next(error);
-    }
-}
-
-
-const logout = (req,res) => {
-    req.user = req.session.user;
-    if(req.session.user) {
-        req.session.destroy((err) => {
-            if(err){
-                res.status(400).send('Unable to logout');
-            }
-            else {
-                res.send('Logout Successful')
-            }
-        });
-    }
-}
-
-
-module.exports = { register, login, logout };

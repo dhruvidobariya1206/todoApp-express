@@ -1,6 +1,5 @@
 const express = require('express');
 const session = require('express-session');
-const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const { schedule } = require('./src/lib/cron');
 const { authRoute } = require('./src/components/auth/route');
@@ -18,7 +17,7 @@ app.use(session({
     resave: false
 }));
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 morgan.token('userSession', (req,res) => {
     if(req.user || req.session.user) {
