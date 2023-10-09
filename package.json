@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "test": "mocha ./src/**/test.js --exit"
+    "start": "nodemon -r dotenv-safe/config . dotenv_config_path=./.env",
+    "test": "mocha ./src/**/test.js -r dotenv-safe/config . dotenv_config_path=./.env --exit"
   },
   "author": "",
   "license": "ISC",
@@ -14,7 +14,7 @@
     "chai": "^4.3.10",
     "chai-http": "^4.4.0",
     "cron": "^3.0.0",
-    "dotenv": "^16.3.1",
+    "dotenv-safe": "^8.2.0",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "express-validation": "^4.1.0",

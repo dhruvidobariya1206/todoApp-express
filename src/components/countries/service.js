@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 
-const api = 'https://dev-api-minibrands.zurutech.online/v1/countries';
+const api = process.env.COUNTRY_API;
 
 module.exports = {
     getAll : async () => {

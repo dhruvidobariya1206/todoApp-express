@@ -3,9 +3,9 @@ const service = require('./service');
 module.exports = {
     register : async (req,res, next) => {
         try {
-            const username = req.body.username,
-                password = req.body.password,
-                email = req.body.email;
+            const username = req.body.username;
+            const password = req.body.password;
+            const email = req.body.email;
             const result = await service.register(username,password,email);
             req.user = result;
             res.status(201).send(result)
@@ -17,7 +17,9 @@ module.exports = {
 
     login : async (req,res, next) => {
         try {
-            const result = await service.login(req.body.username, req.body.password);
+            const username = req.body.username;
+            const password = req.body.password;
+            const result = await service.login(username, password);
             req.session.user = result;
             res.status(200).send(result);
         }

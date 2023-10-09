@@ -224,7 +224,7 @@ describe('Todos', async () => {
         })
         it('invalid todo id', (done) => {
             chai.request(app)
-                .get(`/users/todos/18`)
+                .get(`/users/todos/50`)
                 .set('Cookie', sessionCookie)
                 .end((err,res) => {
                     expect(res.body).to.exist;

@@ -13,7 +13,8 @@ module.exports = {
 
     getOneCountry : async (req, res, next) => {
         try{
-            const result = await getOne(req.params.id);
+            const id = req.params.id;
+            const result = await getOne(id);
             res.status(200).send(result);
         }
         catch(error) {

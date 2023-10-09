@@ -3,7 +3,8 @@ const service = require('./service');
 module.exports = {
     getAll : async (req, res, next) => {
         try {
-            const result = await service.getAll(req.session.user.id);
+            const userId = req.session.user.id;
+            const result = await service.getAll(userId);
             res.status(200).send(result);
         }
         catch (error) {
@@ -13,7 +14,9 @@ module.exports = {
 
     getOne : async (req, res, next) => {
         try {
-            const result = await service.getOne(req.session.user.id, req.params.id);
+            const userId = req.session.user.id;
+            const todoId = req.params.id;
+            const result = await service.getOne(userId, todoId);
             res.status(200).send(result);
         }
         catch (error) {
@@ -23,7 +26,10 @@ module.exports = {
 
     add : async (req, res, next) => {
         try {
-            const result = await service.add(req.session.user.id, req.body.title, req.body.description);
+            const userId = req.session.user.id;
+            const title = req.body.title;
+            const description = req.body.description;
+            const result = await service.add(userId, title, description);
             res.status(201).send(result);
         }
         catch (error) {
@@ -33,7 +39,11 @@ module.exports = {
     
     update : async (req, res, next) => {
         try {
-            const result = await service.update(req.session.user.id, req.params.id, req.body.title, req.body.description);
+            const userId = req.session.user.id;
+            const title = req.body.title;
+            const description = req.body.description;
+            const todoId = req.params.id;
+            const result = await service.update(userId, todoId, title, description);
             res.status(202).send(result);
         }
         catch (error) {
@@ -43,7 +53,9 @@ module.exports = {
 
     remove : async (req,res, next) => {
         try {
-            await service.remove(req.session.user.id, req.params.id);
+            const userId = req.session.user.id;
+            const todoId = req.params.id;
+            await service.remove(userId, todoId);
             res.status(204).send({
                 code: 'delete successfull',
                 message: 'item is deleted successfully.'

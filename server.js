@@ -6,8 +6,8 @@ const { authRoute } = require('./src/components/auth/route');
 const { todoRoute } = require('./src/components/todo/route');
 const { countriesRoute } = require('./src/components/countries/route')
 const { errorHandler } = require('./src/utils/helper');
-require('dotenv').config({ path: './.env' })
-
+// require('dotenv').config({path: './env'})
+// require('dotenv-safe').config();
 
 const app = express();
 
@@ -24,7 +24,7 @@ morgan.token('userSession', (req,res) => {
         return JSON.stringify(req.user || req.session.user);
     }
 });
-app.use(morgan('[:date[web]] :method :status :url :userSession'));
+app.use(morgan('[:date[clf]] :method :status :url :userSession'));
 
 // ROUTES
 app.use('/users', authRoute);

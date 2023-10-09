@@ -1,6 +1,6 @@
 const { get5DaysTodo } = require('./todo/service');
 const { transporter } = require('../lib/nodeMailer');
-require('dotenv').config({path: '../../.env'});
+
 
 
 const sendMail = async (todo) => {
