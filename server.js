@@ -1,11 +1,12 @@
 const express = require('express');
 const session = require('express-session');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const { schedule } = require('./src/lib/cron');
 const { authRoute } = require('./src/components/auth/route');
 const { todoRoute } = require('./src/components/todo/route');
 const { countriesRoute } = require('./src/components/countries/route')
 const { errorHandler } = require('./src/utils/helper');
-const { schedule } = require('./src/lib/cron');
 require('dotenv').config({ path: './.env' })
 
 
@@ -19,15 +20,21 @@ app.use(session({
 
 app.use(bodyParser.json());
 
+morgan.token('userSession', (req,res) => {
+    if(req.user || req.session.user) {
+        return JSON.stringify(req.user || req.session.user);
+    }
+});
+app.use(morgan('[:date[web]] :method :status :url :userSession'));
 
 // ROUTES
 app.use('/users', authRoute);
 app.use('/users/todos', todoRoute);
 app.use('/countries',countriesRoute);
 
-app.use((req,res) => {
-    schedule;
-});
+// app.use((req,res) => {
+//     schedule;
+// });
 app.use((req, res, next) => {
     next(new Error('PAGE_NOT_FOUND'));
 });

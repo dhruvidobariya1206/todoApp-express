@@ -32,7 +32,7 @@ describe('Countries test', () => {
         .reply(200,data);
 
     before('login', (done) => {
-        const userCredentials = {"username": "20", "password": "20202020"};        
+        const userCredentials = {"username": "dhruvi", "password": "12345678"};        
         
         chai.request(app)
             .post('/users/login')

@@ -11,29 +11,29 @@ const app = require('../../../server');
 describe('auth', () => {
     const userCredentials = {"username": "dhruvi", "password": "12345678", "email": "ddobariya5262@gmail.com"};
     
-    // before('delete record', async () => {
-    //     const client = await pool.connect();
-    //     const query = `
-    //         DELETE FROM
-    //             "user"
-    //         WHERE
-    //             username = '$1'`;
-    //     const parameters = [userCredentials.username];
-    //     await client.query(query, parameters);
-    //     client.release();
-    // });
-
-    after('delete record', async () => {
+    before('delete record', async () => {
         const client = await pool.connect();
         const query = `
             DELETE FROM
                 "user"
             WHERE
-                username = '($1)'`;
-        const parameters = [userCredentials.username];
+                username = $1`;
+        const parameters = ['dhruvi'];
         await client.query(query, parameters);
         client.release();
     });
+
+    // after('delete record', async () => {
+    //     const client = await pool.connect();
+    //     const query = `
+    //         DELETE FROM
+    //             "user"
+    //         WHERE
+    //             username = $1`;
+    //     const parameters = ['dhruvi'];
+    //     await client.query(query, parameters);
+    //     client.release();
+    // });
 
     describe("Resgister page", () => {
         it('register user', (done) => {

@@ -4,7 +4,7 @@ require('dotenv').config({path: '../../.env'});
 
 
 const getEmails = async() => {
-    console.log('cron job schedular');
+    // console.log('cron job schedular');
     try{
         const todos = await get5DaysTodo();
         // console.log(emails);
@@ -28,9 +28,9 @@ const sendMail = async (todo) => {
         if(err) {
             console.log(err);
         }
-        else{
-            console.log(info.messageId);
-        }
+        // else{
+        //     // console.log(info.messageId);
+        // }
     })
     
 }

@@ -14,7 +14,7 @@ describe('Todos', async () => {
     let sessionCookie, todoId;
 
     before('login', (done) => {
-        const userCredentials = {"username": "20", "password": "20202020"};        
+        const userCredentials = {"username": "dhruvi", "password": "12345678"};        
         
         chai.request(app)
             .post('/users/login')
@@ -37,13 +37,20 @@ describe('Todos', async () => {
 
     after('delete record', async () => {
         const client = await pool.connect();
-        const query = `
+        const todoQuery = `
             DELETE FROM
                 todo
             WHERE
                 id = $1`;
-        const parameters = [todoId]
-        await client.query(query,parameters);
+        const todoParam = [todoId]
+        await client.query(todoQuery, todoParam);
+        const userQuery = `
+            DELETE FROM
+                "user"
+            WHERE
+                username = $1`;
+        const userParams = ['dhruvi'];
+        await client.query(userQuery, userParams);
         await client.release();
     });
 

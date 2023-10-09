@@ -3,6 +3,7 @@ const service = require('./service');
 
 const getAll = async (req, res, next) => {
     try {
+        console.log(req.user);
         const result = await service.getAll(req.session.user.id);
         res.status(200).send(result);
     }

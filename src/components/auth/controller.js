@@ -24,6 +24,7 @@ const login = async (req,res, next) => {
 
 
 const logout = (req,res) => {
+    req.user = req.session.user;
     if(req.session.user) {
         req.session.destroy((err) => {
             if(err){
