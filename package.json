@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon -r dotenv-safe/config . dotenv_config_path=./.env",
-    "test": "mocha ./src/**/test.js -r dotenv-safe/config . dotenv_config_path=./.env --exit"
+    "start": "nodemon server.js",
+    "test": "mocha ./src/**/test.js --exit "
   },
   "author": "",
   "license": "ISC",

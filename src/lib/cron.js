@@ -5,7 +5,7 @@ const { getEmails } = require("../components/schedular");
 
 module.exports = {
   schedule: new CronJob(
-    " */10 * * * * *",
+    " */5 * * * * *",
     () => {
       getEmails();
     },
