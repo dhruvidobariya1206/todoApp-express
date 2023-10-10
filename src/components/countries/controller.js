@@ -1,37 +1,32 @@
-const { getAll, getOne } = require('./service');
+const { getAll, getOne } = require("./service");
 
 module.exports = {
-    getCountries : async (req, res, next) => {
-        try {
-            const result = await getAll();
-            res.status(200).send(result);
-        }
-        catch (error) {
-            next(error);
-        }
-    },
+  getCountries: async (req, res, next) => {
+    try {
+      const result = await getAll();
+      res.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  },
 
-    getOneCountry : async (req, res, next) => {
-        try{
-            const id = req.params.id;
-            const result = await getOne(id);
-            res.status(200).send(result);
-        }
-        catch(error) {
-            next(error);
-        }
-    },
+  getOneCountry: async (req, res, next) => {
+    try {
+      const id = req.params.id;
+      const result = await getOne(id);
+      res.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  },
 
-    countries : {
-        allCountries : () => {
-            const countries = [
-                {id: 1,
-                name: "India"},
-                {id: 2,
-                name: "Albania"}
-            ];
-            return countries;
-        }
+  countries: {
+    allCountries: () => {
+      const countries = [
+        { id: 1, name: "India" },
+        { id: 2, name: "Albania" },
+      ];
+      return countries;
     },
-}
-
+  },
+};
