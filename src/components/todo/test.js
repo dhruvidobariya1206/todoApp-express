@@ -1,11 +1,12 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
+const app = require("../../../server");
 chai.use(chaiHttp);
 const { pool } = require("../../../dbconn");
 
 const expect = chai.expect;
 
-const app = require("../../../server");
+
 
 describe("Todos", async () => {
   let sessionCookie, todoId;

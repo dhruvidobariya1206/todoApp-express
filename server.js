@@ -1,5 +1,5 @@
+require("dotenv-safe").config({ path: './.env' });
 const express = require("express");
-require("dotenv-safe").config();
 const session = require("express-session");
 const morgan = require("morgan");
 const { schedule } = require("./src/lib/cron");
@@ -7,7 +7,6 @@ const { authRoute } = require("./src/components/auth/route");
 const { todoRoute } = require("./src/components/todo/route");
 const { countriesRoute } = require("./src/components/countries/route");
 const { errorHandler } = require("./src/utils/helper");
-
 
 const app = express();
 
@@ -20,7 +19,6 @@ app.use(
 );
 
 app.use(express.json());
-
 
 morgan.token("userSession", (req, res) => {
   if (req.user || req.session.user) {
