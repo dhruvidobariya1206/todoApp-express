@@ -1,4 +1,4 @@
-module.exports.ERRORS = {
+export const ERRORS = {
   INVALID_DATA: {
     code: 400,
     response: {

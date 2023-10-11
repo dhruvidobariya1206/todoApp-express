@@ -1,13 +1,9 @@
-const chai = require("chai");
-const chaiHttp = require("chai-http");
-chai.use(chaiHttp);
-const {
-  calculateAge,
-  calculateExpiresAt,
-  calculateMinFromSec,
-} = require("./helper");
+import { use, expect as _expect } from "chai";
+import chaiHttp from "chai-http";
+use(chaiHttp);
+import { calculateAge, calculateExpiresAt, calculateMinFromSec } from "./helper";
 
-const expect = chai.expect;
+const expect = _expect;
 
 describe("helper", () => {
   describe("calculateAge", () => {

@@ -1,12 +1,13 @@
+// eslint-disable-next-line no-undef
 require("dotenv-safe").config({ path: './.env' });
-const express = require("express");
-const session = require("express-session");
-const morgan = require("morgan");
-const { schedule } = require("./src/lib/cron");
-const { authRoute } = require("./src/components/auth/route");
-const { todoRoute } = require("./src/components/todo/route");
-const { countriesRoute } = require("./src/components/countries/route");
-const { errorHandler } = require("./src/utils/helper");
+import express, { json } from "express";
+import session from "express-session";
+import morgan, { token } from "morgan";
+// import { schedule } from "./src/lib/cron";
+import { authRoute } from "./src/components/auth/route";
+import { todoRoute } from "./src/components/todo/route";
+import { countriesRoute } from "./src/components/countries/route";
+import { errorHandler } from "./src/utils/helper";
 
 const app = express();
 
@@ -18,9 +19,9 @@ app.use(
   })
 );
 
-app.use(express.json());
+app.use(json());
 
-morgan.token("userSession", (req, res) => {
+token("userSession", (req) => {
   if (req.user || req.session.user) {
     return JSON.stringify(req.user || req.session.user);
   }
@@ -42,8 +43,10 @@ app.use((req, res, next) => {
 
 app.use(errorHandler);
 
+// eslint-disable-next-line no-undef
 app.listen(process.env.PORT || 3000, () => {
+  // eslint-disable-next-line no-undef
   console.log(`Server started on port: ${process.env.PORT || 3000}`);
 });
 
-module.exports = app;
+export default app;
