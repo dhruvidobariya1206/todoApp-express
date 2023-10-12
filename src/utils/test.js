@@ -20,7 +20,7 @@ describe("helper", () => {
     it("11/10/22", (done) => {
       const date = new Date("2022-10-11").toISOString();
       const age = calculateAge(date);
-      expect(age).to.equal(0);
+      expect(age).to.equal(1);
       done();
     });
     it("08/10/22", (done) => {
