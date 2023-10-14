@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "3.0.0": "^3.0.0",
     "axios": "^1.5.1",
     "cron": "^3.0.0",
     "dotenv-safe": "^8.2.0",
@@ -28,6 +29,8 @@
     "husky": "^8.0.3",
     "mocha": "^10.2.0",
     "nock": "^13.3.3",
-    "sinon": "^16.1.0"
+    "sinon": "^16.1.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
   }
 }

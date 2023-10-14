@@ -1,12 +1,13 @@
 require("dotenv-safe").config({ path: './.env' });
 const express = require("express");
 const session = require("express-session");
-const morgan = require("morgan");
-const { schedule } = require("./src/lib/cron");
+// const schedular = require('./src/components/schedular');
+const swaggerRoute = require('./doc/swaggerJsdoc');
 const { authRoute } = require("./src/components/auth/route");
 const { todoRoute } = require("./src/components/todo/route");
 const { countriesRoute } = require("./src/components/countries/route");
 const { errorHandler } = require("./src/utils/helper");
+const { logs } = require('./src/lib/logger');
 
 const app = express();
 
@@ -19,22 +20,17 @@ app.use(
 );
 
 app.use(express.json());
+// schedular.init();
 
-morgan.token("userSession", (req, res) => {
-  if (req.user || req.session.user) {
-    return JSON.stringify(req.user || req.session.user);
-  }
-});
-app.use(morgan("[:date[clf]] :method :status :url :userSession"));
+
+app.use(logs());
 
 // ROUTES
 app.use("/users", authRoute);
 app.use("/users/todos", todoRoute);
 app.use("/countries", countriesRoute);
 
-// app.use((req,res) => {
-//     schedule;
-// });
+app.use('/api-docs', swaggerRoute);
 
 app.use((req, res, next) => {
   next(new Error("PAGE_NOT_FOUND"));

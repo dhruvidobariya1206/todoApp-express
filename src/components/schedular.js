@@ -1,5 +1,6 @@
 const { get5DaysTodo } = require("./todo/service");
 const { transporter } = require("../lib/nodeMailer");
+const { schedule } = require('../lib/cron')
 
 const sendMail = async (todo) => {
   const mail = {
@@ -12,14 +13,13 @@ const sendMail = async (todo) => {
     if (err) {
       console.log(err);
     }
-    // else{
-    //     // console.log(info.messageId);
-    // }
+    else{
+        console.log('mail sent');
+    }
   });
 };
 
-module.exports = {
-  getEmails: async () => {
+const getEmails = async () => {
     // console.log('cron job schedular');
     try {
       const todos = await get5DaysTodo();
@@ -30,5 +30,10 @@ module.exports = {
     } catch (error) {
       console.log(error);
     }
-  },
+  };
+
+module.exports = {
+  init: () => {
+    const mailer = schedule(process.env.SCHEDULAR_EXPRESSION, getEmails);
+  }
 };
