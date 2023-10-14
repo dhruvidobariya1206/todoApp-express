@@ -71,6 +71,8 @@ todoRoute.get("/:id", controller.getOne);
  *              title: title
  *              description: description 
  *    responses:
+ *      400:
+ *        description: invalid/ incomplete data
  *      401:
  *        description: unauthorized - user login required
  *      201:
