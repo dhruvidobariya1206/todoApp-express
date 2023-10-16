@@ -8,7 +8,7 @@ const expect = chai.expect;
 
 describe("auth", () => {
   const userCredentials = {
-    username: "dhruvi",
+    username: "xyz",
     password: "12345678",
     email: "ddobariya5262@gmail.com",
   };
@@ -200,7 +200,7 @@ describe("auth", () => {
 
   describe("logout page", () => {
     let sessionCookie;
-    const userCredentials = { username: "dhruvi", password: "12345678" };
+    const userCredentials = { username: "xyz", password: "12345678" };
     before("login user", (done) => {
       chai
         .request(app)

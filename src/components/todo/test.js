@@ -12,7 +12,7 @@ describe("Todos", async () => {
   let sessionCookie, todoId;
 
   before("login", (done) => {
-    const userCredentials = { username: "dhruvi", password: "12345678" };
+    const userCredentials = { username: "xyz", password: "12345678" };
 
     chai
       .request(app)
