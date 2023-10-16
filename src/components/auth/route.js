@@ -3,8 +3,11 @@ const authRoute = express.Router();
 const validation = require("./validation");
 const controller = require("./controller");
 const { validate } = require("express-validation");
-const reqBody = require('../../../doc/auth/reqBody');
+// const reqBody = require('../../../doc/auth/reqBody');
+// const yaml = require('yaml');
 
+// const doc = new yaml.Document();
+// doc.contents = reqBody.login;
 
 /**
  * @swagger
@@ -14,52 +17,18 @@ const reqBody = require('../../../doc/auth/reqBody');
  *      - Authentication
  *    description: register a user
  *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *            type: object
- *            properties:
- *              username:
- *                type: string
- *              password:
- *                type: string
- *              email:
- *                type: string
- *            required:
- *              - username 
- *              - password 
- *              - email 
- *            example: 
- *              username: dhruvi2
- *              password: '12345678'
- *              email: abc@gmail.com
+ *      $ref: '#/components/requestBodies/register'
  *    responses:
  *      201:
- *        description: created
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                id: 
- *                  type: integer
- *                username: 
- *                  type: string
- *                password: 
- *                  type: string
- *                email: 
- *                  type: string
+ *        $ref: '#/components/responses/successfulRegister'
  *      400:
- *        description: incomplete/invalid data
+ *        $ref: '#/components/responses/invalidData'
  *      409:
- *        description: username or email already exists
+ *        $ref: '#/components/responses/userNotAvailable'
  *      500:
- *        description: internal server error
+ *        $ref: '#/components/responses/imternalServerError'
  */
 authRoute.post("/register", validate(validation.register, {}, {}), controller.register);
-
-
 
 
 /**
@@ -70,42 +39,16 @@ authRoute.post("/register", validate(validation.register, {}, {}), controller.re
  *      - Authentication
  *    description: login a user
  *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *            type: object
- *            properties:
- *              username:
- *                type: string
- *              password:
- *                type: string
- *            required:
- *              - username 
- *              - password 
- *            example: 
- *              username: dhruvi
- *              password: '12345678'
+ *      $ref: '#/components/requestBodies/login'
  *    responses:
  *      200:
- *        description: successful login
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                id: 
- *                  type: integer
- *                username: 
- *                  type: string
- *                email: 
- *                  type: string
+ *        $ref: '#/components/responses/successfulLogin'
  *      400:
- *        description: incomplete data
+ *        $ref: '#/components/responses/invalidData'
  *      404:
- *        description: username not found
+ *        $ref: '#/components/responses/userNotRegistered'
  *      500:
- *        description: internal server error
+ *        $ref: '#/components/responses/imternalServerError'
  */
 authRoute.post("/login", validate(validation.login, {}, {}), controller.login);
 
@@ -120,10 +63,8 @@ authRoute.post("/login", validate(validation.login, {}, {}), controller.login);
  *      name: user
  *      in: cookie
  *    responses:
- *      200:
- *        description: successfull logout
  *      204:
- *        description: successfull logout
+ *        $ref: '#/components/responses/successfulLogout'
  */
 authRoute.get("/logout", controller.logout);
 

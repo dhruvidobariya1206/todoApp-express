@@ -16,9 +16,9 @@ todoRoute.use(isAuth);
  *    description: get all todos
  *    responses:
  *      401:
- *        description: unauthorized - user login required
+ *        $ref: '#/components/responses/unauthorized'
  *      200:
- *        description: all todo listed
+ *        $ref: '#/components/responses/getAllTodos'
  */
 todoRoute.get("/", controller.getAll);
 
@@ -38,11 +38,13 @@ todoRoute.get("/", controller.getAll);
  *          example: 39
  *    responses:
  *      401:
- *        description: unauthorized - user login required
+ *        $ref: '#/components/responses/unauthorized'
  *      400:
- *        description: not user's todo id
+ *        $ref: '#/components/responses/invalidData'
  *      200:
- *        description: todo listed
+ *        $ref: '#/components/responses/getOneTodo'
+ *      404:
+ *        $ref: '#/components/responses/invalidTodoId'
  */
 todoRoute.get("/:id", controller.getOne);
 
@@ -54,42 +56,16 @@ todoRoute.get("/:id", controller.getOne);
  *      - Todo
  *    description: add todo
  *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *            type: object
- *            properties:
- *              title:
- *                type: string
- *              description:
- *                type: string
- *            required:
- *              - title 
- *              - description 
- *            example: 
- *              title: title
- *              description: description 
+ *      $ref: '#/components/requestBodies/addTodo'
  *    responses:
  *      400:
- *        description: invalid/ incomplete data
+ *        $ref: '#/components/responses/invalidData'
  *      401:
- *        description: unauthorized - user login required
+ *        $ref: '#/components/responses/unauthorized'
  *      201:
- *        description: created
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                id:
- *                  type: integer
- *                title:
- *                  type: string
- *                description:
- *                  type: string
+ *        $ref: '#/components/responses/successfullyAdded'
  *      500:
- *        description: internal server error
+ *        $ref: '#/components/responses/imternalServerError'
  */
 todoRoute.post("/", validate(validation.add, {}, {}), controller.add);
 
@@ -107,15 +83,19 @@ todoRoute.post("/", validate(validation.add, {}, {}), controller.add);
  *        schema:
  *          type: number
  *          example: 39
+ *    requestBody:
+ *      $ref: '#/components/requestBodies/updateTodo'
  *    responses:
  *      401:
- *        description: unauthorized - user login required
+ *        $ref: '#/components/responses/unauthorized'
  *      400:
- *        description: not user's todo id
+ *        $ref: '#/components/responses/invalidData'
  *      202:
- *        description: todo updated
+ *        $ref: '#/components/responses/successfullUpdate'
  *      500:
- *        description: internal server error
+ *        $ref: '#/components/responses/imternalServerError'
+ *      404:
+ *        $ref: '#/components/responses/invalidTodoId'
  */
 todoRoute.put("/:id", validate(validation.update, {}, {}), controller.update);
 
@@ -135,11 +115,13 @@ todoRoute.put("/:id", validate(validation.update, {}, {}), controller.update);
  *          example: 39
  *    responses:
  *      400:
- *        description: not user's todo
+ *        $ref: '#/components/responses/invalidData'
+ *      401:
+ *        $ref: '#/components/responses/unauthorized'
  *      204:
- *        description: todo deleted
+ *        $ref: '#/components/responses/todoDeleted'
  *      500:
- *        description: internal server error
+ *        $ref: '#/components/responses/imternalServerError'
  */
 todoRoute.delete("/:id", controller.remove);
 

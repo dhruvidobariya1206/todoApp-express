@@ -7,7 +7,9 @@ module.exports = {
             password,
             email)
         VALUES ($1, $2, $3) 
-        RETURNING *;`;
+        RETURNING 
+          username,
+          email;`;
     const parameters = [username, password, email];
     const result = await dbClient.query(query, parameters);
     return result.rows[0];

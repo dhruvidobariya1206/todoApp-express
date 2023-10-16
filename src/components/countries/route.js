@@ -14,7 +14,9 @@ countriesRoute.use(isAuth);
  *    description: get all countries
  *    responses:
  *      200:
- *        description: all countries listed
+ *        $ref: '#/components/responses/allCountries'
+ *      401:
+ *        $ref: '#/components/responses/unauthorized'
  */
 countriesRoute.get("/", getCountries);
 
@@ -34,11 +36,11 @@ countriesRoute.get("/", getCountries);
  *          example: 76
  *    responses:
  *      200:
- *        description: get country
+ *        $ref: '#/components/responses/getOneCountry'
  *      401:
- *        description: user not logged in
+ *        $ref: '#/components/responses/unauthorized'
  *      404:
- *        description: invalid country id
+ *        $ref: '#/components/responses/invalidCountryId'
  */
 countriesRoute.get("/:id", getOneCountry);
 
