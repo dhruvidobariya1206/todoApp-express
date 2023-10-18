@@ -14,7 +14,7 @@ let response = {};
 Object.assign(response, authRes, todoRes, countryRes);
 
 
-console.log(reqBody);
+// console.log(reqBody);
 const options = {
   definition: {
     openapi: '3.1.0',
@@ -31,6 +31,14 @@ const options = {
     components: {
       requestBodies: reqBody,
       responses: response,
+      securitySchemes: {
+        userAuth: {
+          type: 'apiKey',
+          description: 'user authentication. You can use "connect.sid=s%3ARb_3FTxc91slLfur79BiT2zoXgNffus_.Wiy1HoNdrlFBCu6ifsYilZbcO3mgPyQmK3Fpy%2Bfx9Pc; Path=/; HttpOnly;"',
+          name: 'connect.sid',
+          in: 'cookie',
+        }
+      }
     },
   },
   apis: ['./src/components/*/route.js'], 

@@ -11,7 +11,7 @@ const expect = chai.expect;
 describe("Todos", async () => {
   let sessionCookie, todoId;
 
-  before("login", (done) => {
+  before("User login", (done) => {
     const userCredentials = { username: "xyz", password: "12345678" };
 
     chai
@@ -35,7 +35,7 @@ describe("Todos", async () => {
       });
   });
 
-  after("delete record", async () => {
+  after("Delete records", async () => {
     const client = await pool.connect();
     try {
       const todoQuery = `
@@ -50,15 +50,15 @@ describe("Todos", async () => {
                     "userAccount"
                 WHERE
                     username = $1`;
-      const userParams = ["dhruvi"];
+      const userParams = ["xyz"];
       await client.query(userQuery, userParams);
     } finally {
       client.release();
     }
   });
 
-  describe("add todo", async () => {
-    it("successful addition", (done) => {
+  describe("Add todo", async () => {
+    it("Should successfully add todo", (done) => {
       const todoDetails = { title: "15", description: "one five" };
       chai
         .request(app)
@@ -80,7 +80,7 @@ describe("Todos", async () => {
         });
     });
 
-    it("title and description required", (done) => {
+    it("Requires title and description", (done) => {
       chai
         .request(app)
         .post(`/users/todos`)
@@ -93,7 +93,7 @@ describe("Todos", async () => {
         });
     });
 
-    it("description required", (done) => {
+    it("Requires description", (done) => {
       chai
         .request(app)
         .post(`/users/todos`)
@@ -106,7 +106,7 @@ describe("Todos", async () => {
         });
     });
 
-    it("title required", (done) => {
+    it("Requires title", (done) => {
       chai
         .request(app)
         .post(`/users/todos`)
@@ -119,7 +119,7 @@ describe("Todos", async () => {
         });
     });
 
-    it("unauthorized", (done) => {
+    it("Requires user login", (done) => {
       chai
         .request(app)
         .post(`/users/todos`)
@@ -132,8 +132,8 @@ describe("Todos", async () => {
     });
   });
 
-  describe("update todo", async () => {
-    it("update title and description", (done) => {
+  describe("Update todo", async () => {
+    it("Should update title and description", (done) => {
       chai
         .request(app)
         .put(`/users/todos/${todoId}`)
@@ -146,7 +146,7 @@ describe("Todos", async () => {
         });
     });
 
-    it("update title ", (done) => {
+    it("Should update title ", (done) => {
       chai
         .request(app)
         .put(`/users/todos/${todoId}`)
@@ -159,7 +159,7 @@ describe("Todos", async () => {
         });
     });
 
-    it("update description", (done) => {
+    it("Should update description", (done) => {
       chai
         .request(app)
         .put(`/users/todos/${todoId}`)
@@ -172,7 +172,7 @@ describe("Todos", async () => {
         });
     });
 
-    it("no title and description", (done) => {
+    it("Requires title or description", (done) => {
       chai
         .request(app)
         .put(`/users/todos/${todoId}`)
@@ -185,7 +185,7 @@ describe("Todos", async () => {
         });
     });
 
-    it("unauthorized", (done) => {
+    it("Requires user login", (done) => {
       chai
         .request(app)
         .post(`/users/todos/${todoId}`)
@@ -198,8 +198,8 @@ describe("Todos", async () => {
     });
   });
 
-  describe("get all todos", async () => {
-    it("all todos", (done) => {
+  describe("Get all todos", async () => {
+    it("Returns all todos", (done) => {
       chai
         .request(app)
         .get(`/users/todos/`)
@@ -211,10 +211,22 @@ describe("Todos", async () => {
           done();
         });
     });
+
+    it("Requires user login", (done) => {
+      chai
+        .request(app)
+        .get(`/users/todos/`)
+        .end((err, res) => {
+          expect(res.body).to.exist;
+          expect(res.body).be.an("object");
+          expect(res).to.have.status(401);
+          done();
+        });
+    });
   });
 
-  describe("get one todo", async () => {
-    it("one todo", (done) => {
+  describe("Get one todo", async () => {
+    it("Returns one todo", (done) => {
       chai
         .request(app)
         .get(`/users/todos/${todoId}`)
@@ -225,7 +237,7 @@ describe("Todos", async () => {
           done();
         });
     });
-    it("invalid todo id", (done) => {
+    it("returns invalid todo id", (done) => {
       chai
         .request(app)
         .get(`/users/todos/50`)
@@ -237,7 +249,7 @@ describe("Todos", async () => {
         });
     });
 
-    it("unauthorized", (done) => {
+    it("Requires user login", (done) => {
       chai
         .request(app)
         .post(`/users/todos/${todoId}`)
@@ -250,8 +262,8 @@ describe("Todos", async () => {
     });
   });
 
-  describe("delete todo", async () => {
-    it("delete", (done) => {
+  describe("Delete todo", async () => {
+    it("Should delete todo", (done) => {
       chai
         .request(app)
         .delete(`/users/todos/${todoId}`)
@@ -262,7 +274,7 @@ describe("Todos", async () => {
         });
     });
 
-    it("invalid todo id", (done) => {
+    it("Returns invalid todo id", (done) => {
       chai
         .request(app)
         .delete(`/users/todos/18`)
@@ -273,7 +285,7 @@ describe("Todos", async () => {
         });
     });
 
-    it("unauthorized", (done) => {
+    it("Requires user login", (done) => {
       chai
         .request(app)
         .post(`/users/todos/${todoId}`)

@@ -1,5 +1,5 @@
 const express = require("express");
-const authRoute = express.Router();
+const router = express.Router();
 const validation = require("./validation");
 const controller = require("./controller");
 const { validate } = require("express-validation");
@@ -26,10 +26,10 @@ const { validate } = require("express-validation");
  *      409:
  *        $ref: '#/components/responses/userNotAvailable'
  *      500:
- *        $ref: '#/components/responses/imternalServerError'
+ *        $ref: '#/components/responses/internalServerError'
  */
-authRoute.post("/register", validate(validation.register, {}, {}), controller.register);
-
+router.route("/register")
+  .post(validate(validation.register), controller.register);
 
 /**
  * @swagger
@@ -48,9 +48,10 @@ authRoute.post("/register", validate(validation.register, {}, {}), controller.re
  *      404:
  *        $ref: '#/components/responses/userNotRegistered'
  *      500:
- *        $ref: '#/components/responses/imternalServerError'
+ *        $ref: '#/components/responses/internalServerError'
  */
-authRoute.post("/login", validate(validation.login, {}, {}), controller.login);
+router.route("/login")
+  .post(validate(validation.login), controller.login);
 
 /**
  * @swagger
@@ -59,13 +60,13 @@ authRoute.post("/login", validate(validation.login, {}, {}), controller.login);
  *    tags:
  *      - Authentication
  *    description: logout user
- *    parameters:
- *      name: user
- *      in: cookie
+ *    security:
+ *      - userAuth: []
  *    responses:
  *      204:
  *        $ref: '#/components/responses/successfulLogout'
  */
-authRoute.get("/logout", controller.logout);
+router.route("/logout")
+  .get(controller.logout);
 
-module.exports = { authRoute };
+module.exports = router;

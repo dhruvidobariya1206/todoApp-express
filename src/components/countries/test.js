@@ -27,7 +27,7 @@ describe("Countries test", () => {
     .get("")
     .reply(200, data);
 
-  before("login", (done) => {
+  before("User login", (done) => {
     const userCredentials = { username: "xyz", password: "12345678" };
 
     chai
@@ -52,7 +52,7 @@ describe("Countries test", () => {
   });
 
   describe("get /countries/", async () => {
-    it("get all countries", (done) => {
+    it("Should return all countries", (done) => {
       chai
         .request(app)
         .get("/countries/")
@@ -65,7 +65,7 @@ describe("Countries test", () => {
         });
     });
 
-    it("check login", (done) => {
+    it("Should return user not login", (done) => {
       chai
         .request(app)
         .get("/countries/")
@@ -79,7 +79,7 @@ describe("Countries test", () => {
   });
 
   describe("get /countries/:id", async () => {
-    it("get country", (done) => {
+    it("Should return country", (done) => {
       chai
         .request(app)
         .get(`/countries/${id}`)
@@ -92,7 +92,7 @@ describe("Countries test", () => {
         });
     });
 
-    it("invalid id", (done) => {
+    it("Returns invalid country id", (done) => {
       chai
         .request(app)
         .get(`/countries/5`)
@@ -105,7 +105,7 @@ describe("Countries test", () => {
         });
     });
 
-    it("check login", (done) => {
+    it("Should return user not login", (done) => {
       chai
         .request(app)
         .get(`/countries/${id}`)

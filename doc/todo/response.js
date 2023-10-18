@@ -15,7 +15,7 @@ module.exports = {
     description: 'todo created',
     required: true,
     content: {
-      'application/jspon': {
+      'application/json': {
         schema: {
           type: 'object',
           properties: {
@@ -39,11 +39,11 @@ module.exports = {
     }
   },
 
-  successfullUpdate: {
+  successfulUpdate: {
     description: 'todo updated',
     required: true,
     content: {
-      'application/jspon': {
+      'application/json': {
         schema: {
           type: 'object',
           properties: {

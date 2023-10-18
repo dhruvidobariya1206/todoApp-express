@@ -2,10 +2,10 @@ require("dotenv-safe").config({ path: './.env' });
 const express = require("express");
 const session = require("express-session");
 // const schedular = require('./src/components/schedular');
-const swaggerRoute = require('./doc/swaggerJsdoc');
-const { authRoute } = require("./src/components/auth/route");
-const { todoRoute } = require("./src/components/todo/route");
-const { countriesRoute } = require("./src/components/countries/route");
+const swaggerRouter = require('./doc/swaggerJsdoc');
+const authRouter = require("./src/components/auth/route");
+const todoRouter = require("./src/components/todo/route");
+const countriesRouter = require("./src/components/countries/route");
 const { errorHandler } = require("./src/utils/helper");
 const { logs } = require('./src/lib/logger');
 
@@ -26,11 +26,11 @@ app.use(express.json());
 app.use(logs());
 
 // ROUTES
-app.use("/users", authRoute);
-app.use("/users/todos", todoRoute);
-app.use("/countries", countriesRoute);
+app.use("/users", authRouter);
+app.use("/users/todos", todoRouter);
+app.use("/countries", countriesRouter);
 
-app.use('/api-docs', swaggerRoute);
+app.use('/api-docs', swaggerRouter);
 
 app.use((req, res, next) => {
   next(new Error("PAGE_NOT_FOUND"));

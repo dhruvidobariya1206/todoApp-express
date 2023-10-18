@@ -25,8 +25,7 @@ module.exports = {
   add: async (req, res, next) => {
     try {
       const userId = req.session.user.id;
-      const title = req.body.title;
-      const description = req.body.description;
+      const { title, description } = req.body;
       const result = await service.add(userId, title, description);
       res.status(201).send(result);
     } catch (error) {
@@ -37,8 +36,7 @@ module.exports = {
   update: async (req, res, next) => {
     try {
       const userId = req.session.user.id;
-      const title = req.body.title;
-      const description = req.body.description;
+      const { title, description } = req.body;
       const todoId = req.params.id;
       const result = await service.update(userId, todoId, title, description);
       res.status(202).send(result);
@@ -53,7 +51,7 @@ module.exports = {
       const todoId = req.params.id;
       await service.remove(userId, todoId);
       res.status(204).send({
-        code: "delete successfull",
+        code: "delete successful",
         message: "item is deleted successfully.",
       });
     } catch (error) {

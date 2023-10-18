@@ -18,7 +18,7 @@ module.exports = {
           },
         },
         example: {
-          username: 'dhruvi',
+          username: 'abc',
           password: '12345678'
         }
       }

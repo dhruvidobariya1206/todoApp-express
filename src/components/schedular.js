@@ -20,10 +20,8 @@ const sendMail = async (todo) => {
 };
 
 const getEmails = async () => {
-    // console.log('cron job schedular');
     try {
       const todos = await get5DaysTodo();
-      // console.log(emails);
       todos.forEach((todo) => {
         sendMail(todo);
       });

@@ -1,9 +1,9 @@
 const express = require("express");
-const countriesRoute = express.Router();
-const { getCountries, getOneCountry } = require("./controller");
+const router = express.Router();
+const controller = require("./controller");
 const { isAuth } = require("../../middleware/todo");
 
-countriesRoute.use(isAuth);
+router.use(isAuth);
 
 /**
  * @swagger
@@ -12,13 +12,16 @@ countriesRoute.use(isAuth);
  *    tags: 
  *      - Countries
  *    description: get all countries
+ *    security:
+ *      - userAuth: []
  *    responses:
  *      200:
  *        $ref: '#/components/responses/allCountries'
  *      401:
  *        $ref: '#/components/responses/unauthorized'
  */
-countriesRoute.get("/", getCountries);
+router.route("/")
+  .get(controller.getCountries);
 
 /**
  * @swagger
@@ -27,6 +30,8 @@ countriesRoute.get("/", getCountries);
  *    tags: 
  *      - Countries
  *    description: get country by id
+ *    security: 
+ *      - userAuth: []
  *    parameters:
  *      - name: id
  *        in: path
@@ -42,6 +47,7 @@ countriesRoute.get("/", getCountries);
  *      404:
  *        $ref: '#/components/responses/invalidCountryId'
  */
-countriesRoute.get("/:id", getOneCountry);
+router.route("/:id")
+  .get(controller.getOneCountry);
 
-module.exports = { countriesRoute };
+module.exports = router;

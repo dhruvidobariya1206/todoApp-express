@@ -1,9 +1,9 @@
-const { getAll, getOne } = require("./service");
+const service = require("./service");
 
 module.exports = {
   getCountries: async (req, res, next) => {
     try {
-      const result = await getAll();
+      const result = await service.getAll();
       res.status(200).send(result);
     } catch (error) {
       next(error);
@@ -13,7 +13,7 @@ module.exports = {
   getOneCountry: async (req, res, next) => {
     try {
       const id = req.params.id;
-      const result = await getOne(id);
+      const result = await service.getOne(id);
       res.status(200).send(result);
     } catch (error) {
       next(error);

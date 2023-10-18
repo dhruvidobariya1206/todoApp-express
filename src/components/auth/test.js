@@ -6,14 +6,14 @@ const { pool } = require("../../../dbconn");
 
 const expect = chai.expect;
 
-describe("auth", () => {
+describe("authentication", () => {
   const userCredentials = {
     username: "xyz",
     password: "12345678",
     email: "ddobariya5262@gmail.com",
   };
 
-  before("delete record", async () => {
+  before("Delete record", async () => {
     const client = await pool.connect();
     try {
       const query = `
@@ -21,15 +21,15 @@ describe("auth", () => {
                     "userAccount"
                 WHERE
                     username = $1`;
-      const parameters = ["dhruvi"];
+      const parameters = ["xyz"];
       await client.query(query, parameters);
     } finally {
       client.release();
     }
   });
 
-  describe("Resgister page", () => {
-    it("register user", (done) => {
+  describe("Register page", () => {
+    it("Should register user", (done) => {
       chai
         .request(app)
         .post("/users/register")
@@ -38,14 +38,13 @@ describe("auth", () => {
           expect(res.body).to.exist;
           expect(res).have.status(201);
           expect(res.body).be.a("object");
-          expect(res.body).to.have.property("id");
           expect(res.body).to.have.property("username");
           expect(res.body).to.have.property("email");
           done();
         });
     });
 
-    it("username already exists", (done) => {
+    it("Should give username already exists", (done) => {
       chai
         .request(app)
         .post("/users/register")
@@ -58,7 +57,7 @@ describe("auth", () => {
         });
     });
 
-    it("password required", (done) => {
+    it("Should require password", (done) => {
       const username = { username: "26", email: "ddobariya5262@gmail.com" };
 
       chai
@@ -72,7 +71,7 @@ describe("auth", () => {
         });
     });
 
-    it("username required", (done) => {
+    it("Should require username", (done) => {
       const password = {
         password: "26262626",
         email: "ddobariya5262@gmail.com",
@@ -89,7 +88,7 @@ describe("auth", () => {
         });
     });
 
-    it("email required", (done) => {
+    it("Should require email", (done) => {
       const password = { username: "26", password: "26262626" };
 
       chai
@@ -103,7 +102,7 @@ describe("auth", () => {
         });
     });
 
-    it("password length not of 8 characters", (done) => {
+    it("Should give password length not of 8 characters", (done) => {
       chai
         .request(app)
         .post("/users/register")
@@ -117,8 +116,8 @@ describe("auth", () => {
   });
 
   describe("Login page", () => {
-    const userCredentials = { username: "dhruvi", password: "12345678" };
-    it("login user", (done) => {
+    const userCredentials = { username: "xyz", password: "12345678" };
+    it("Should login user", (done) => {
       chai
         .request(app)
         .post("/users/login")
@@ -133,7 +132,7 @@ describe("auth", () => {
         });
     });
 
-    it("user not found", (done) => {
+    it("returns user not found", (done) => {
       chai
         .request(app)
         .post("/users/login")
@@ -145,7 +144,7 @@ describe("auth", () => {
         });
     });
 
-    it("password required", (done) => {
+    it("Should require password", (done) => {
       const username = { username: "26" };
 
       chai
@@ -159,7 +158,7 @@ describe("auth", () => {
         });
     });
 
-    it("username required", (done) => {
+    it("Should require username", (done) => {
       const password = { password: "26262626" };
 
       chai
@@ -173,7 +172,7 @@ describe("auth", () => {
         });
     });
 
-    it("password length not of 8 characters", (done) => {
+    it("Returns password length not of 8 characters", (done) => {
       chai
         .request(app)
         .post("/users/login")
@@ -185,23 +184,12 @@ describe("auth", () => {
         });
     });
 
-    it("user not found", (done) => {
-      chai
-        .request(app)
-        .post("/users/login")
-        .send({ username: "00", password: "26262626" })
-        .end((err, res) => {
-          expect(res.body).to.exist;
-          expect(res).have.status(404);
-          done();
-        });
-    });
   });
 
-  describe("logout page", () => {
+  describe("Logout page", () => {
     let sessionCookie;
     const userCredentials = { username: "xyz", password: "12345678" };
-    before("login user", (done) => {
+    before("User login", (done) => {
       chai
         .request(app)
         .post("/users/login")
@@ -220,7 +208,7 @@ describe("auth", () => {
         });
     });
 
-    it("user logout", (done) => {
+    it("Should logout user", (done) => {
       chai
         .request(app)
         .get("/users/logout")

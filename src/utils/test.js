@@ -9,44 +9,42 @@ const {
 
 const expect = chai.expect;
 
-describe("helper", () => {
-  describe("calculateAge", () => {
-    it("09/10/22", (done) => {
+describe("Helper", () => {
+  describe("Calculate age", () => {
+    it("should return age 1", (done) => {
       const date = new Date("2022-10-09").toISOString();
       const age = calculateAge(date);
       expect(age).to.equal(1);
       done();
     });
-    it("11/10/22", (done) => {
+    it("should return age 1", (done) => {
       const date = new Date("2022-10-11").toISOString();
       const age = calculateAge(date);
       expect(age).to.equal(1);
       done();
     });
-    it("08/10/22", (done) => {
+    it("should return age 1", (done) => {
       const date = new Date("2022-10-08").toISOString();
       const age = calculateAge(date);
       expect(age).to.equal(1);
       done();
     });
-    it("12/06/02", (done) => {
+    it("should return age 21", (done) => {
       const date = new Date("2002-06-12").toISOString();
       const age = calculateAge(date);
-      // console.log(age);
       expect(age).to.equal(21);
       done();
     });
-    it("07/11/02", (done) => {
+    it("should return age 20", (done) => {
       const date = new Date("2002-11-07").toISOString();
       const age = calculateAge(date);
-      // console.log(age);
       expect(age).to.equal(20);
       done();
     });
   });
 
-  describe("calculateExpiresAt", () => {
-    it("10 sec", (done) => {
+  describe("Calculate expires at", () => {
+    it("should expire in 10 sec", (done) => {
       let date = new Date();
       date.setSeconds(date.getSeconds() + 10);
       const expiry = calculateExpiresAt(10);
@@ -55,7 +53,7 @@ describe("helper", () => {
       done();
     });
 
-    it("90 sec", (done) => {
+    it("should expire in 90 sec", (done) => {
       let date = new Date();
       date.setSeconds(date.getSeconds() + 90);
       const expiry = calculateExpiresAt(90);
@@ -65,22 +63,19 @@ describe("helper", () => {
     });
   });
 
-  describe("calculateMinFromSec", () => {
-    it("60 sec", (done) => {
+  describe("Calculate min from sec", () => {
+    it("should return 1 min", (done) => {
       const seconds = calculateMinFromSec(60);
-      // console.log(seconds);
       expect(seconds).to.equal(1);
       done();
     });
-    it("90 sec", (done) => {
+    it("should return 1.5 min", (done) => {
       const seconds = calculateMinFromSec(90);
-      // console.log(seconds);
       expect(seconds).to.equal(1.5);
       done();
     });
-    it("30 sec", (done) => {
+    it("should return 0.5 min", (done) => {
       const seconds = calculateMinFromSec(30);
-      // console.log(seconds);
       expect(seconds).to.equal(0.5);
       done();
     });

@@ -4,14 +4,14 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "dev": "nodemon server.js",
+    "start": "node server.js",
     "test": "mocha ./src/**/test.js --exit ",
     "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "3.0.0": "^3.0.0",
     "axios": "^1.5.1",
     "cron": "^3.0.0",
     "dotenv-safe": "^8.2.0",

@@ -11,10 +11,10 @@ module.exports = {
   getOne: async (id) => {
     const result = await axios.get(api);
     const countryArr = result.data.data.countries;
-    const rsltCountry = countryArr.find((country) => country.id == id);
-    if (!rsltCountry) {
+    const resultCountry = countryArr.find((country) => country.id == id);
+    if (!resultCountry) {
       throw new Error("RESOURCE_NOT_FOUND");
     }
-    return rsltCountry;
+    return resultCountry;
   },
 };

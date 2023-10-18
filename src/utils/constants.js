@@ -17,7 +17,7 @@ module.exports.ERRORS = {
     code: 401,
     response: {
       code: "User not successfully created",
-      message: "User registration is not successfull.",
+      message: "User registration is not successful.",
     },
   },
   CONFLICT: {

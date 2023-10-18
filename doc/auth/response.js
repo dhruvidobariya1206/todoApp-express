@@ -1,6 +1,6 @@
 module.exports = {
   successfulRegister: {
-    description: 'Registeration successfull.',
+    description: 'Registration successful.',
     content: {
       'application/json': {
         schemas: {
@@ -30,12 +30,20 @@ module.exports = {
     description: 'Username or email already in exists.'
   },
 
-  imternalServerError: {
+  internalServerError: {
     description: 'Internal server error.'    
   },
 
   successfulLogin: {
-    description: 'Registeration successfull.',
+    description: 'Login successful.',
+    headers: {
+      'Set-Cookie': {
+        schema: {
+          type: 'string',
+        },
+        example: 'connect.sid=s%3ARb_3FTxc91slLfur79BiT2zoXgNffus_.Wiy1HoNdrlFBCu6ifsYilZbcO3mgPyQmK3Fpy%2Bfx9Pc; Path=/; HttpOnly;'
+      }
+    },
     content: {
       'application/json': {
         schemas: {
@@ -66,6 +74,6 @@ module.exports = {
   },
 
   successfulLogout: {
-    description: 'Successfully logged out.'
-  }
+    description: 'successfully logged out.'
+  },
 }

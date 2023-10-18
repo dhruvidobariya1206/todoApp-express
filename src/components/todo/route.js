@@ -1,11 +1,11 @@
 const express = require("express");
-const todoRoute = express.Router({ mergeParams: true });
+const router = express.Router({ mergeParams: true });
 const validation = require("./validation");
 const controller = require("./controller");
 const { isAuth } = require("../../middleware/todo");
 const { validate } = require("express-validation");
 
-todoRoute.use(isAuth);
+router.use(isAuth);
 
 /**
  * @swagger
@@ -14,13 +14,34 @@ todoRoute.use(isAuth);
  *    tags: 
  *      - Todo
  *    description: get all todos
+ *    security:
+ *      - userAuth: []
  *    responses:
  *      401:
  *        $ref: '#/components/responses/unauthorized'
  *      200:
  *        $ref: '#/components/responses/getAllTodos'
+ *  post:
+ *    tags:
+ *      - Todo
+ *    description: add todo
+ *    security:
+ *      - userAuth: []
+ *    requestBody:
+ *      $ref: '#/components/requestBodies/addTodo'
+ *    responses:
+ *      400:
+ *        $ref: '#/components/responses/invalidData'
+ *      401:
+ *        $ref: '#/components/responses/unauthorized'
+ *      201:
+ *        $ref: '#/components/responses/successfullyAdded'
+ *      500:
+ *        $ref: '#/components/responses/internalServerError'
  */
-todoRoute.get("/", controller.getAll);
+router.route("/")
+  .get(controller.getAll)
+  .post(validate(validation.add), controller.add);
 
 /**
  * @swagger
@@ -29,6 +50,8 @@ todoRoute.get("/", controller.getAll);
  *    tags: 
  *      - Todo
  *    description: get all todos
+ *    security:
+ *      - userAuth: []
  *    parameters:
  *      - name: id
  *        in: path
@@ -45,37 +68,12 @@ todoRoute.get("/", controller.getAll);
  *        $ref: '#/components/responses/getOneTodo'
  *      404:
  *        $ref: '#/components/responses/invalidTodoId'
- */
-todoRoute.get("/:id", controller.getOne);
-
-/**
- * @swagger
- * /users/todos/:
- *  post:
- *    tags:
- *      - Todo
- *    description: add todo
- *    requestBody:
- *      $ref: '#/components/requestBodies/addTodo'
- *    responses:
- *      400:
- *        $ref: '#/components/responses/invalidData'
- *      401:
- *        $ref: '#/components/responses/unauthorized'
- *      201:
- *        $ref: '#/components/responses/successfullyAdded'
- *      500:
- *        $ref: '#/components/responses/imternalServerError'
- */
-todoRoute.post("/", validate(validation.add, {}, {}), controller.add);
-
-/**
- * @swagger
- * /users/todos/{id}:
  *  put:
  *    tags:
  *      - Todo
  *    description: update todo
+ *    security:
+ *      - userAuth: []
  *    parameters:
  *      - name: id
  *        in: path 
@@ -91,21 +89,17 @@ todoRoute.post("/", validate(validation.add, {}, {}), controller.add);
  *      400:
  *        $ref: '#/components/responses/invalidData'
  *      202:
- *        $ref: '#/components/responses/successfullUpdate'
+ *        $ref: '#/components/responses/successfulUpdate'
  *      500:
- *        $ref: '#/components/responses/imternalServerError'
+ *        $ref: '#/components/responses/internalServerError'
  *      404:
  *        $ref: '#/components/responses/invalidTodoId'
- */
-todoRoute.put("/:id", validate(validation.update, {}, {}), controller.update);
-
-/**
- * @swagger
- * /users/todos/{id}:
  *  delete:
  *    tags:
  *      - Todo
  *    description: delete todo or mark complete
+ *    security:
+ *      - userAuth: []
  *    parameters:
  *      - name: id
  *        in: path
@@ -121,8 +115,12 @@ todoRoute.put("/:id", validate(validation.update, {}, {}), controller.update);
  *      204:
  *        $ref: '#/components/responses/todoDeleted'
  *      500:
- *        $ref: '#/components/responses/imternalServerError'
+ *        $ref: '#/components/responses/internalServerError'
  */
-todoRoute.delete("/:id", controller.remove);
+router.get("/:id", controller.getOne);
+router.route("/:id")
+  .get(controller.getOne)
+  .put(validate(validation.update), controller.update)
+  .delete(controller.remove);
 
-module.exports = { todoRoute };
+module.exports = router;
