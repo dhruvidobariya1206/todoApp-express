@@ -1,1 +1,3 @@
-/nodemodules
+*.zip
+
+./node_modules

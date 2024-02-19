@@ -1,4 +1,4 @@
-const Pool = require("pg-pool");
+const Pool = require('pg-pool');
 
 module.exports = {
   pool: new Pool({
